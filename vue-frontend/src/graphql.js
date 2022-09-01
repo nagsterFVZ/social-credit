@@ -11,6 +11,19 @@ query Query($id: String) {
 }
 `;
 
+export const GET_ALL_USERS_QUERY = gql `
+  query Query {
+    getAllUsers {
+      _id
+      name
+      score
+      socialId
+    }
+  }
+`;
+
+
+
 export const REGISTER_USER_MUTATION = gql`
   mutation Mutation($input: RegisterInput!) {
     registerUser(input: $input) {

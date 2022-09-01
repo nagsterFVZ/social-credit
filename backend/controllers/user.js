@@ -2,7 +2,6 @@ require('dotenv').config();
 const { User } = require('../database/models/user.js');
 
 const editUser = async (userDataToUpdate) => {
-	console.log(userDataToUpdate);
 	const user = await User.findById(userDataToUpdate._id);
     
 	if (!user) throw new Error('User does not exist');
@@ -44,8 +43,17 @@ const registerUser = async (user) => {
 	return res;
 };
 
+const getAllUsers = async () => {
+	const users = await User.find();
+    
+	if (!users) return null;
+
+	return users;
+};
+
 module.exports = {    
 	editUser,
 	getUserById,
-	registerUser
+	registerUser,
+	getAllUsers
 };

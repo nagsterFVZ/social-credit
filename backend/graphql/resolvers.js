@@ -8,6 +8,12 @@ const resolvers = {
     
 			return res;
 		},
+		getAllUsers: async (_, __, context) => {
+			
+			const res = await userController.getAllUsers();
+    
+			return res;
+		},
 	},
 	Mutation: {
 		editUser: async (_, input, context) => {

@@ -137,8 +137,6 @@ export default {
 	height: 64px;
 	cursor: pointer;
 
-
-
 #content
 	align-items: center;
 	justify-items: center;
