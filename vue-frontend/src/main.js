@@ -18,7 +18,7 @@ import { createUploadLink } from 'apollo-upload-client';
 
 const uploadLink = createUploadLink({
 	uri: 'https://becreative.distillation.dev/graphql',
-	//uri: 'http://localhost:6969/graphql',
+	//uri: 'http://192.168.178.193:6969/graphql',
 });
 
 // const authLink = setContext((_, { headers }) => {

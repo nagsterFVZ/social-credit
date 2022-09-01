@@ -67,7 +67,7 @@
         preview-disabled
       />
       <br>
-      <div v-if="user.score && (data.isAdmin || data.isVoter)">
+      <div v-if="user.score != null && (data.isAdmin || data.isVoter)">
         <h3 style="margin-top: 0px;margin-bottom: 4px">
           Social Score
         </h3>
@@ -190,6 +190,11 @@ async function vote(value){
 		socialId: user.value.socialId
 	};
 	newUser.score += value;
+	if(newUser.score > 100){
+		newUser.score = 100;
+	}else if(newUser.score < 0){
+		newUser.score = 0;
+	}
 	await client.mutate({
 		mutation: EDIT_USER_MUTATION,
 		variables: {

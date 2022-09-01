@@ -1,5 +1,19 @@
 <template>
   <n-loading-bar-provider>
+    <n-modal v-model:show="qrScanner">
+      <n-card
+        style="width: 90vw"
+        :bordered="false"
+        size="huge"
+        role="dialog"
+        aria-modal="true"
+      >
+        <qrcode-stream
+          v-if="qrScanner"
+          @decode="onDecode"
+        />
+      </n-card>
+    </n-modal>
     <n-modal v-model:show="showModal">
       <n-card
         style="width: 200px"
@@ -41,9 +55,25 @@
           <n-space
             id="nav-end"
             :size="[0, 0]"
-          >
-            <n-button @click="showModal = true">
-              Admin
+          > 
+            <n-button
+              quaternary
+              circle
+              style="margin-right: 2px"
+              @click="qrScanner = !qrScanner"
+            >
+              <template #icon>
+                <n-icon><QrCodeScannerFilled /></n-icon>
+              </template>
+            </n-button>
+            <n-button
+              quaternary 
+              circle
+              @click="showModal = true"
+            >
+              <template #icon>
+                <n-icon><AdminPanelSettingsRound /></n-icon>
+              </template>
             </n-button>
           </n-space>
         </div>
@@ -82,10 +112,13 @@
 import { ref } from 'vue';
     
 import { useDataStore } from '@/stores/data';
+import { QrcodeStream } from 'vue-qrcode-reader';
+import {QrCodeScannerFilled,AdminPanelSettingsRound} from '@vicons/material';
+import router from './router';
     
 export default {
 	name: 'App',
-	components: {},
+	components: {QrcodeStream,QrCodeScannerFilled,AdminPanelSettingsRound},
 	setup() {
 		const data = useDataStore();
     
@@ -96,7 +129,9 @@ export default {
 		};
 	},
     
-	data: () => ({}),
+	data: () => ({
+		qrScanner: false
+	}),
     
 	mounted() {},
     
@@ -106,12 +141,16 @@ export default {
 				this.code = '';
 				this.showModal = false;
 				this.data.setVoter();
-			}else if(this.code = '9874'){
+			}else if(this.code == '9876'){
 				this.code = '';
 				this.showModal = false;
 				this.data.isAdmin = true;
 				this.data.setAdmin();
 			}
+		},
+		onDecode(scanned){
+			this.qrScanner = false;
+			router.push({ name: 'rating', params: { id: scanned.split('/')[4] } });
 		},
 	},
 };
